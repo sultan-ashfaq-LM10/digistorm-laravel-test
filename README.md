@@ -14,8 +14,9 @@ Installation instructions
 5. Run "php artisan key:generate".
 6. Run "php artisan migrate:fresh --seed".
 7. Run "php artisan db:seed" command
-8. Run "npm run dev" command or "yarn run dev" command
-9. Run "php artisan serve".
+8. Run "npm install" command or "yarn install" command
+9. Run "npm run dev" command or "yarn run dev" command
+10. Run "php artisan serve".
 
 Using php artisan serve
 - Browse to the url the "php artisan serve" command output to view the application.
