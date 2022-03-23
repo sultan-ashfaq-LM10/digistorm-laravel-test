@@ -1,6 +1,6 @@
 Requirements
 - Php 8.0
-- Laravel 8
+- Laravel 8+
 - MySql 5.6+
 - Node 12+
 - NPM 6.14.6 or Yarn 1.13.0
