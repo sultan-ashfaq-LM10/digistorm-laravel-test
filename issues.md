@@ -1,0 +1,3 @@
+- Currently, there is no authentication. This means that anyone can create a contact, and it will not be linked to any user.
+- Contact routes should be protected by auth middleware
+- There should be a Contact Policy to make sure that only the owner of the contact can update or delete it.
