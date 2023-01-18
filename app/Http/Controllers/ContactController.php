@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Contact\ContactStoreAction;
+use App\Actions\Contact\ContactUpdateAction;
+use App\Http\Requests\ContactStoreRequest;
+use App\Http\Requests\ContactUpdateRequest;
 use App\Models\Contact;
 use App\Models\PhoneNumber;
 use Illuminate\Http\Request;
@@ -16,7 +20,16 @@ class ContactController extends Controller
     public function index()
     {
 
-        $contacts =  Contact::paginate(5);
+        if (request()->has('query')) {
+            $search = request()->get('query');
+            $contacts = Contact::query()
+                ->where('first_name', 'like', "%{$search}%")
+                ->orWhere('last_name', 'like', "%{$search}%")
+                ->orWhere('company_name', 'like', "%{$search}%")
+                ->paginate(10);
+        } else {
+            $contacts =  Contact::paginate(5);
+        }
 
         return view('contacts.index', compact('contacts'));
     }
@@ -34,21 +47,12 @@ class ContactController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     * @throws \Throwable
+     * @param ContactStoreRequest $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function store(Request $request)
+    public function store(ContactStoreRequest $request)
     {
-
-
-        $contact = new Contact();
-        $contact->fill($request->all());
-        $contact->save();
-        foreach ($request->number as $number) {
-            PhoneNumber::create(['number' => $number, 'contact_id' => $contact->id]);
-        }
-
+        $contact = ContactStoreAction::execute($request->validated());
         return view('contacts.show', compact('contact'));
     }
 
@@ -77,29 +81,31 @@ class ContactController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Contact $contact
-     * @return \Illuminate\Http\Response
+     * @param ContactUpdateRequest $request
+     * @param Contact $contact
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Contact $contact)
+    public function update(ContactUpdateRequest $request, Contact $contact)
     {
-        $contact->fill($request->all());
+        ContactUpdateAction::execute($request->all(), $contact);
 
-        foreach ($contact->phoneNumbers as $phoneNumber) {
-            if (! in_array($phoneNumber->number, $request->number)) {
-                $phoneNumber->delete();
-            }
-        }
-        foreach ($request->number as $number) {
-            $alreadyAssigned = $contact->phoneNumbers->firstWhere('number', $number);
-            if (
-                empty($alreadyAssigned)
-                && ! empty($number)
-            ) {
-                PhoneNumber::create(['number' => $number, 'contact_id' => $contact->id]);
-            }
-        }
-        $contact->save();
+//        $contact->fill($request->all());
+//
+//        foreach ($contact->phoneNumbers as $phoneNumber) {
+//            if (! in_array($phoneNumber->number, $request->number)) {
+//                $phoneNumber->delete();
+//            }
+//        }
+//        foreach ($request->number as $number) {
+//            $alreadyAssigned = $contact->phoneNumbers->firstWhere('number', $number);
+//            if (
+//                empty($alreadyAssigned)
+//                && ! empty($number)
+//            ) {
+//                PhoneNumber::create(['number' => $number, 'contact_id' => $contact->id]);
+//            }
+//        }
+//        $contact->save();
 
         return redirect()->route('contacts.show', compact('contact'));
     }

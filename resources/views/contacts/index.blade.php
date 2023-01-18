@@ -6,9 +6,20 @@
             <div class="col-10">
                 <h1>Contacts</h1>
             </div>
+
+
             <div class="col-2">
                 <a href="{{ route('contacts.create') }}" class="btn btn-primary">Add Contact</a>
             </div>
+
+            <div class="col-2">
+                <form action="{{ route('contacts.index') }}" method="GET" enctype="multipart/form-data">
+                    <input type="text" name="query" value="{{ app('request')->input('query') ?? '' }}" class="form-control">
+                    <br>
+                    <button class="btn btn-primary">Search Contacts</button>
+                </form>
+            </div>
+
         </div>
         @foreach($contacts as $contact)
             <div class="row pb-3">

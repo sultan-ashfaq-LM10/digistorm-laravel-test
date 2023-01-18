@@ -20,42 +20,42 @@
                 <div class="row">
                     <div class="col-auto">
                         <label class="form-label">First Name
-                            <input type="text" name="first_name"/>
+                            <input type="text" name="first_name" value="{{old('first_name')}}"/>
                         </label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-auto">
                         <label class="form-label">Last Name
-                            <input type="text" name="last_name"/>
+                            <input type="text" name="last_name" value="{{old('last_name')}}"/>
                         </label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-auto">
                         <label class="form-label">Date of Birth
-                            <input type="text" name="DOB"/>
+                            <input type="text" name="DOB" value="{{old('DOB')}}"/>
                         </label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-auto">
                         <label class="form-label">Company
-                            <input type="text" name="company_name"/>
+                            <input type="text" name="company_name" value="{{old('company_name')}}"/>
                         </label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-auto">
                         <label class="form-label">Position
-                            <input type="text" name="position"/>
+                            <input type="text" name="position" value="{{old('position')}}"/>
                         </label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-auto">
                         <label class="form-label">Email
-                            <input type="text" name="email"/>
+                            <input type="text" name="email" value="{{old('email')}}"/>
                         </label>
                     </div>
                 </div>
