@@ -2,15 +2,26 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
-            <h1 class="mr-3">{{ $contact->full_name }}</h1>
-            <a href="{{ route('contacts.edit', ['contact' => $contact]) }}" class="btn btn-info">Edit</a>
-            <form method="POST" action="{{ route('contacts.destroy', ['contact' => $contact]) }}">
-                @csrf
-                @method('delete')
-                <button type="submit" class="btn btn-danger">Delete</a>
-            </form>
-        </div>
+        <div class="row my-5">
+            <div class="col-5">
+                <h1 class="mr-3">{{ $contact->full_name }}</h1>
+            </div>
+
+            <div class="col-5" >
+                <div class="float-end mx-2">
+                    <a href="{{ route('contacts.edit', ['contact' => $contact]) }}" class="btn btn-info">Edit</a>
+                </div>
+                <div class="float-end">
+                    <form method="POST" action="{{ route('contacts.destroy', ['contact' => $contact]) }}">
+                        @csrf
+                        @method('delete')
+                        <button type="submit" class="btn btn-danger">Delete</a>
+                    </form>
+                </div>
+
+            </div>
+
+            </div>
         <div class="row">
             <h3>Details</h3>
         </div>

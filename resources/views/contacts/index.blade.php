@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row mb-3">
-            <div class="col-10">
+            <div class="col-7">
                 <h1>Contacts</h1>
             </div>
 
@@ -12,11 +12,10 @@
                 <a href="{{ route('contacts.create') }}" class="btn btn-primary">Add Contact</a>
             </div>
 
-            <div class="col-2">
+            <div class="col-3">
                 <form action="{{ route('contacts.index') }}" method="GET" enctype="multipart/form-data">
                     <input type="text" name="query" value="{{ app('request')->input('query') ?? '' }}" class="form-control">
-                    <br>
-                    <button class="btn btn-primary">Search Contacts</button>
+                        <button class="btn btn-primary float-end">Search Contacts</button>
                 </form>
             </div>
 
@@ -41,17 +40,20 @@
                             @endforeach
                         </p>
                     </div>
-                    <div class="border-top  p-4">
-                        <span class="float-start">
+                    <div class="border-top p-4">
+                        <div class="col-2">
+                            <span class="float-start">
                             <a href="{{ route('contacts.edit', ['contact' => $contact]) }}" class="btn btn-info">Edit</a>
                         </span>
-                        <span class="float-end">
+                            <span class="float-end">
                             <form method="POST" action="{{ route('contacts.destroy', ['contact' => $contact]) }}">
                                 @csrf
                                 @method('delete')
                                 <button type="submit" class="btn btn-danger">Delete</a>
                             </form>
                         </span>
+                        </div>
+
                     </div>
                 </div>
             </div>

@@ -16,65 +16,58 @@
         @endif
         <form class="g-3" method="POST" action="{{ route('contacts.store') }}">
             @csrf
-            <div class="container">
-                <div class="row">
+            <div class="form-row">
+                <div class="form-group col-md-6">
                     <div class="col-auto">
-                        <label class="form-label">First Name
-                            <input type="text" name="first_name" value="{{old('first_name')}}"/>
-                        </label>
+                        <label class="form-label">First Name</label>
+                        <input class="form-control" type="text" name="first_name" value="{{old('first_name')}}"/>
                     </div>
                 </div>
-                <div class="row">
+                <div class="form-group col-md-6">
                     <div class="col-auto">
-                        <label class="form-label">Last Name
-                            <input type="text" name="last_name" value="{{old('last_name')}}"/>
-                        </label>
+                        <label class="form-label">Last Name</label>
+                        <input class="form-control" type="text" name="last_name" value="{{old('last_name')}}"/>
                     </div>
                 </div>
-                <div class="row">
+                <div class="form-group col-md-6">
                     <div class="col-auto">
-                        <label class="form-label">Date of Birth
-                            <input type="text" name="DOB" value="{{old('DOB')}}"/>
-                        </label>
+                        <label class="form-label">Date of Birth</label>
+                        <input class="form-control" type="text" name="DOB" value="{{old('DOB')}}"/>
                     </div>
                 </div>
-                <div class="row">
+                <div class="form-group col-md-6">
                     <div class="col-auto">
-                        <label class="form-label">Company
-                            <input type="text" name="company_name" value="{{old('company_name')}}"/>
-                        </label>
+                        <label class="form-label">Company</label>
+                        <input class="form-control" type="text" name="company_name" value="{{old('company_name')}}"/>
                     </div>
                 </div>
-                <div class="row">
+                <div class="form-group col-md-6">
                     <div class="col-auto">
-                        <label class="form-label">Position
-                            <input type="text" name="position" value="{{old('position')}}"/>
-                        </label>
+                        <label class="form-label">Position</label>
+                        <input class="form-control" type="text" name="position" value="{{old('position')}}"/>
                     </div>
                 </div>
-                <div class="row">
+                <div class="form-group col-md-6">
                     <div class="col-auto">
-                        <label class="form-label">Email
-                            <input type="text" name="email" value="{{old('email')}}"/>
-                        </label>
+                        <label class="form-label">Email</label>
+                        <input class="form-control" type="text" name="email" value="{{old('email')}}"/>
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="form-group col-md-6">
                     <div class="col-auto">
-                        <label class="form-label">Phone Number
-                            <input type="text" name="number[]"/>
-                            <button class="btn btn-primary" onclick="addNumber()">Add another phone</button>
-                        </label>
+                        <label class="form-label">Phone Number</label>
+                        <input class="form-control float-start" type="text" name="number[]"/>
+                        <button class="btn btn-primary float-end" onclick="addNumber()">Add another phone</button>
                     </div>
                 </div>
-                <div class="row" id="additionalNumberArea">
+                <div class="form-group col-md-6" id="additionalNumberArea">
                     <div class="col-auto">
                     </div>
                 </div>
-                <div class="row">
+                <div class="form-group col-md-6">
                     <div class="col-auto">
-                        <button type="submit" class="btn btn-primary">Add</button>
+                        <button type="submit" class="btn btn-primary">Add Contact</button>
                     </div>
                 </div>
             </div>
@@ -92,6 +85,7 @@
             document.querySelector('#additionalNumberArea').appendChild(label);
             let number = document.createElement('input');
             number.setAttribute('type', 'text');
+            number.classList = 'form-control col-md-6'
             number.setAttribute('name', 'number[]');
             label.appendChild(number);
         }
