@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\LogDailyContacts;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -15,7 +16,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        // run LogDailyContacts job every day at 00:00
+        $schedule->job(new LogDailyContacts())->daily();
     }
 
     /**
