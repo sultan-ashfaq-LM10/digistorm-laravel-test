@@ -59,11 +59,17 @@
                         </label>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-auto">
                         <label class="form-label">Phone Number
                             <input type="text" name="number[]"/>
+                            <button class="btn btn-primary" onclick="addNumber()">Add another phone</button>
                         </label>
+                    </div>
+                </div>
+                <div class="row" id="additionalNumberArea">
+                    <div class="col-auto">
                     </div>
                 </div>
                 <div class="row">
@@ -74,4 +80,21 @@
             </div>
         </form>
     </div>
+
+    <script>
+        // add a new label and input for an additional phone number
+        function addNumber() {
+            // stop the form from submitting
+            event.preventDefault();
+            let label = document.createElement('label');
+            label.className = 'form-label';
+            label.innerText = 'Phone Number';
+            document.querySelector('#additionalNumberArea').appendChild(label);
+            let number = document.createElement('input');
+            number.setAttribute('type', 'text');
+            number.setAttribute('name', 'number[]');
+            label.appendChild(number);
+        }
+
+    </script>
 @endsection

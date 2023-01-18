@@ -3,6 +3,7 @@
 namespace App\Actions\Contact;
 
 use App\Models\Contact;
+use App\Models\PhoneNumber;
 
 class ContactStoreAction
 {
@@ -17,17 +18,30 @@ class ContactStoreAction
      * }
      * @return void
      */
-    public static function execute(array $data): Contact
+    public function handle(array $data): Contact
     {
         $contact = new Contact();
         $contact->fill($data);
         $contact->save();
+        $this->addPhoneNumber($data['number'], $contact->id);
+        return tap($contact)->refresh();
+    }
 
-//        foreach ($data->number as $number) {
-//            PhoneNumber::create(['number' => $number, 'contact_id' => $contact->id]);
-//        }
-
-        return $contact;
-
+    /**
+     * Add phone number to contact
+     *
+     * @param array $numbers
+     * @param int $contactId
+     * @return bool
+     */
+    public function addPhoneNumber(array $numbers, int $contactId): bool
+    {
+        foreach ($numbers as $number) {
+            if (empty($number)) {
+                continue;
+            }
+            PhoneNumber::create(['number' => $number, 'contact_id' => $contactId]);
+        }
+        return true;
     }
 }

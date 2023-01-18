@@ -7,15 +7,15 @@ use App\Actions\Contact\ContactUpdateAction;
 use App\Http\Requests\ContactStoreRequest;
 use App\Http\Requests\ContactUpdateRequest;
 use App\Models\Contact;
-use App\Models\PhoneNumber;
-use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
     public function index()
     {
@@ -37,7 +37,7 @@ class ContactController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create()
     {
@@ -50,17 +50,17 @@ class ContactController extends Controller
      * @param ContactStoreRequest $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function store(ContactStoreRequest $request)
+    public function store(ContactStoreRequest $request, ContactStoreAction $contactStoreAction)
     {
-        $contact = ContactStoreAction::execute($request->validated());
+        $contact = $contactStoreAction->handle($request->validated());
         return view('contacts.show', compact('contact'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Contact $contact
-     * @return \Illuminate\Http\Response
+     * @param Contact $contact
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function show(Contact $contact)
     {
@@ -70,8 +70,8 @@ class ContactController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Contact $contact
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit(Contact $contact)
     {
@@ -85,36 +85,18 @@ class ContactController extends Controller
      * @param Contact $contact
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(ContactUpdateRequest $request, Contact $contact)
+    public function update(ContactUpdateRequest $request, Contact $contact, ContactUpdateAction $contactUpdateAction)
     {
-        ContactUpdateAction::execute($request->all(), $contact);
-
-//        $contact->fill($request->all());
-//
-//        foreach ($contact->phoneNumbers as $phoneNumber) {
-//            if (! in_array($phoneNumber->number, $request->number)) {
-//                $phoneNumber->delete();
-//            }
-//        }
-//        foreach ($request->number as $number) {
-//            $alreadyAssigned = $contact->phoneNumbers->firstWhere('number', $number);
-//            if (
-//                empty($alreadyAssigned)
-//                && ! empty($number)
-//            ) {
-//                PhoneNumber::create(['number' => $number, 'contact_id' => $contact->id]);
-//            }
-//        }
-//        $contact->save();
-
+        $contactUpdateAction->handle($request->all(), $contact);
         return redirect()->route('contacts.show', compact('contact'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Contact $contact
-     * @return \Illuminate\Http\Response
+     * @param Contact $contact
+     * @return \Illuminate\Http\RedirectResponse
+     *
      */
     public function destroy(Contact $contact)
     {

@@ -29,8 +29,8 @@ class ContactStoreRequest extends FormRequest
             'DOB'           => ['nullable', 'date_format:Y-m-d'],
             'company_name'  => ['required', 'string', 'max:100'],
             'position'      => ['required', 'string', 'max:100'],
-            'email'         =>  ['nullable', 'email', 'unique:contacts,email', 'max:255'],
-//            'number'        =>  ['required', 'string', 'max:255'],
+            'email'         => ['nullable', 'email', 'unique:contacts,email', 'max:255'],
+            'number'       => ['required', 'array', 'min:1'],
         ];
     }
 }
